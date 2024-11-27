@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BAWSAQ Simulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e1e;
+            color: white;
+            text-align: center;
+        }
+
+        h1 {
+            color: #4CAF50;
+        }
+
+        .stock {
+            background-color: #333;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+        }
+
+        .stock p {
+            margin: 5px 0;
+        }
+
+        .btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+
+        .btn.sell {
+            background-color: #e74c3c;
+        }
+
+        .btn.sell:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>BAWSAQ Stock Market</h1>
+
+    <div id="stocks">
+        <div class="stock">
+            <h3>AmCo</h3>
+            <p id="amco-price">Price: $100</p>
+            <button class="btn" onclick="buyStock('AmCo')">Buy</button>
+            <button class="btn sell" onclick="sellStock('AmCo')">Sell</button>
+        </div>
+
+        <div class="stock">
+            <h3>GlobalTech</h3>
+            <p id="globaltech-price">Price: $200</p>
+            <button class="btn" onclick="buyStock('GlobalTech')">Buy</button>
+            <button class="btn sell" onclick="sellStock('GlobalTech')">Sell</button>
+        </div>
+
+        <div class="stock">
+            <h3>HyperCorp</h3>
+            <p id="hypercorp-price">Price: $50</p>
+            <button class="btn" onclick="buyStock('HyperCorp')">Buy</button>
+            <button class="btn sell" onclick="sellStock('HyperCorp')">Sell</button>
+        </div>
+    </div>
+
+    <div id="message"></div>
+
+    <script>
+        // Stock prices
+        const stockPrices = {
+            "AmCo": 100,
+            "GlobalTech": 200,
+            "HyperCorp": 50
+        };
+
+        // Simulate price fluctuation
+        function updatePrices() {
+            for (let stock in stockPrices) {
+                const priceElement = document.getElementById(stock.toLowerCase() + "-price");
+                stockPrices[stock] = Math.round((Math.random() * 100) + stockPrices[stock] * 0.9); // Random fluctuation
+                priceElement.textContent = `Price: $${stockPrices[stock]}`;
+            }
+        }
+
+        // Buy stock function
+        function buyStock(stockName) {
+            const stockPrice = stockPrices[stockName];
+            const message = `You bought 1 share of ${stockName} for $${stockPrice}.`;
+            displayMessage(message);
+        }
+
+        // Sell stock function
+        function sellStock(stockName) {
+            const stockPrice = stockPrices[stockName];
+            const message = `You sold 1 share of ${stockName} for $${stockPrice}.`;
+            displayMessage(message);
+        }
+
+        // Display message
+        function displayMessage(message) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = message;
+            setTimeout(() => messageDiv.textContent = '', 3000); // Clear message after 3 seconds
+        }
+
+        // Update prices every 5 seconds
+        setInterval(updatePrices, 5000);
+
+    </script>
+
+</body>
+</html>
